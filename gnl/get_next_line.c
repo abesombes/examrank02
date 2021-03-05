@@ -5,46 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abesombe <abesombe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 14:00:50 by abesombe          #+#    #+#             */
-/*   Updated: 2021/03/05 15:31:49 by abesombe         ###   ########.fr       */
+/*   Created: 2021/03/05 23:55:05 by abesombe          #+#    #+#             */
+/*   Updated: 2021/03/06 00:43:07 by abesombe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int ft_has_newline(char *str)
+
+char *ft_calloc(int nb_elem, int size_elem)
 {
-    while (*str)
-        if (*str++ == '\n')
-            return (1);
-    return (0);
+	char *s;
+	int i;
+
+	if (!(s = (char *)malloc(nb_elem * size_elem)))
+		return (NULL);
+	i = 0;
+	while (i < nb_elem * size_elem)
+	{
+		s[i] = '\0';
+		i++;			
+	}
+	return (s);
 }
 
-void ft_copy_paste_buf_into_line(t_fi *fi, char **line)
+int 	ft_strlen(char *s)
 {
-    int i;
+	int i;
+	
+	i = -1;
+	while (s[++i]);
+	return (i);
+}
 
-    i = 0;
-    while (fi->buf[fi->pos] != '\n')
-    {
-        *line[i] = fi->buf[fi->pos];
-        i++;
-        fi->pos++;
-    }
+char 	*ft_str_add(char *line, char c)
+{
+	char *new;
+	int	len;
+	int i;
+
+	len = ft_strlen(line);
+	if (!(new = (char *)ft_calloc(len + 2, sizeof(char))))
+		return (NULL);
+	i = 0;
+	while (i < len && line[i])
+	{
+		new[i] = line[i];
+		i++;
+	}
+	new[i] = c;
+	if (line)
+		free(line);
+	return (new); 
 }
 
 int get_next_line(char **line)
 {
-    static t_fi    fi;
-    
-    fi.fd = 0;
-    fi.pos = 0;
-    if (ft_has_newline(fi.buf + fi.pos))
-        ft_copy_paste_buf_into_line(&fi, line);
-        
-    while ((fi.bytes_read = read(fi.fd, fi.buf, BS)) > 0)
-    {
-        
-    }
-    return (1);
+	static char *s;
+	char buf[1];
+	//char *tmp;
+	int ret;
+	
+	if (!line || (!s && !(s = (char*)ft_calloc(1, 1))))
+		return (-1);
+	while ((ret = read(0, buf, 1)) > 0)
+	{
+		*line = ft_str_add(*line, buf[0]);
+		if (buf[0] == '\n')
+			break;
+	}
+	return (0);
+}
+
+int main(void)
+{
+	char *line;
+	int ret;
+	int i;
+
+	i = 0;
+	while ((ret = get_next_line(&line)) > 0)
+	{
+		i++;
+		printf("line %i: [%s] - %i", i, line, ret);
+		free(line);
+		line = 0;
+	}
+	printf("line %i: [%s] - %i", i, line, ret);
+	free(line);
+	line = 0;
 }

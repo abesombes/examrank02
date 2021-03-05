@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abesombe <abesombe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 23:56:38 by abesombe          #+#    #+#             */
-/*   Updated: 2021/03/06 00:27:52 by abesombe         ###   ########.fr       */
+/*   Created: 2021/03/05 13:54:45 by abesombe          #+#    #+#             */
+/*   Updated: 2021/03/05 15:29:53 by abesombe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,28 @@
 #define GET_NEXT_LINE_H
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 
-int get_next_line(char **line);
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 1
+#endif
+
+# define GNL_ERROR -1
+# define GNL_FINISHED 0
+# define GNL_OK 1
+
+# define READ_ERROR -1
+# define READ_FINISHED 0
+
+typedef struct  s_fi
+{
+                char *buf;
+                int pos;
+                int fd;
+                int bytes_read;
+}               t_fi;
+
+int	get_next_line(char **line);
 
 #endif

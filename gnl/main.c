@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int main(void)
+/* int main(void)
 {
     char *line;
     int ret;
@@ -30,4 +30,4 @@ int main(void)
     printf("\nline %i: [%s] - ret = [%i]", i, line, ret);
     free(line);
     line = 0;
-}
+} */
