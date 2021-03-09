@@ -6,7 +6,7 @@
 /*   By: abesombe <abesombe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 14:32:47 by abesombe          #+#    #+#             */
-/*   Updated: 2021/03/09 15:10:00 by abesombe         ###   ########.fr       */
+/*   Updated: 2021/03/09 16:03:32 by abesombe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ int get_next_line(char **line)
             *line = str;
             return (1);
         }
-        str = ft_strjoin(str, buf[0]);
+        if (!(str = ft_strjoin(str, buf[0])))
+        {
+            free(tmp);
+            return (-1);
+        }
         free(tmp);
     }
     *line = str;
