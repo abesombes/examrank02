@@ -6,7 +6,7 @@
 /*   By: abesombe <abesombe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 23:34:34 by abesombe          #+#    #+#             */
-/*   Updated: 2021/03/09 09:00:30 by abesombe         ###   ########.fr       */
+/*   Updated: 2021/03/09 13:46:55 by abesombe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char *ft_calloc(int nb_elem, int size_elem)
 	int len;
 	int i;
 
+	i = 0;
 	len = nb_elem * size_elem;
 	if (!(p = (char *)malloc(len * sizeof(char))))
 	i = 0;
@@ -106,7 +107,7 @@ int get_next_line(char **line)
 		free(tmp);
 		return (1);
 	}	
-	*line = ft_sub_str(s, 0, '\0');
+	*line = ft_sub_str(s, 0, 0);
 	free(s);
 	return (0);
 }
